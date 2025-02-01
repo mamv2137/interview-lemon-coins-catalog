@@ -1,17 +1,18 @@
 import React from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
-import { styles } from './styles';
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
 import { MainRouteEnum, MainStackParams } from '../../../../routes/types';
+import { Coin } from '../../../../types';
+import { styles } from './styles';
 
-type Props = {
-  coin: any
+interface ICoinItem {
+  coin: Coin
 }
 
-const CoinItem = ({ coin }: Props) => {
+const CoinItem = ({ coin }: ICoinItem) => {
   const navigation = useNavigation<NavigationProp<MainStackParams>>();
 
-  const handleNavigate = () => navigation?.navigate(MainRouteEnum?.COIN, { id: 0 });
+  const handleNavigate = () => navigation?.navigate(MainRouteEnum?.COIN, { ...coin });
 
   return (
     <Pressable
@@ -19,7 +20,7 @@ const CoinItem = ({ coin }: Props) => {
       onPress={handleNavigate}
     >
       <Image source={{
-          uri: 'https://infomex.org.mx/wp-content/uploads/2024/08/bitcoin.png',
+          uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${coin?.id}.png`,
         }}
         style={styles?.image}
       />
@@ -37,14 +38,14 @@ const CoinItem = ({ coin }: Props) => {
             <Text style={{
               fontSize: 16,
               fontWeight: 500
-            }}>BTC</Text>
+            }}>{coin?.symbol}</Text>
             <Text style={{
               color: "red",
               fontSize: 12
 
-            }}>-3.49%</Text>
+            }}>{coin?.cmc_rank}</Text>
           </View>
-          <Text>{coin?.price} USD</Text>
+          <Text>{coin?.quote?.['USD']?.price} USD</Text>
         </View>
         <View style={{
           flexDirection: 'row',
