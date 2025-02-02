@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CoinsScreen from '../screens/CoinsScreen';
 import CoinScreen from '../screens/CoinScreen';
 import { MainRouteEnum, MainStackParams } from './types';
+import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createNativeStackNavigator<MainStackParams>();
 
@@ -17,6 +18,7 @@ const MainStack = () => {
         },
       }}
     >
+      <Stack.Screen name="login" component={LoginScreen} />
       <Stack.Screen name={MainRouteEnum?.COINS} component={CoinsScreen} />
       <Stack.Screen name={MainRouteEnum?.COIN} component={CoinScreen} />
     </Stack.Navigator>
