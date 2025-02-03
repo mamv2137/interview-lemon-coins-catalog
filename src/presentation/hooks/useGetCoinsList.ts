@@ -9,7 +9,8 @@ const useGetCoinsList = () => {
   const fetchCoinsList = async () => {
     setIsLoading(true);
     try {
-      await fetchAsyncCoins();
+      const coins = await fetchAsyncCoins();
+      console.log('coins', coins);
     } catch (err) {
       setError(err);
     } finally {

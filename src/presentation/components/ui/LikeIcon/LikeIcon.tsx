@@ -1,0 +1,15 @@
+import Icon from '@react-native-vector-icons/fontawesome';
+import React from 'react';
+
+type LikeIconProps = {
+  isFavorite: boolean
+  size?: number
+}
+
+const LikeIcon = ({ isFavorite, size = 25 }: LikeIconProps) => {
+  return (
+    <Icon name={isFavorite ? 'heart' : 'heart-o'} size={size} />
+  );
+};
+
+export default LikeIcon;

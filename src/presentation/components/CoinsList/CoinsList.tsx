@@ -1,18 +1,22 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
-import CoinItem from './components/CoinItem.tsx/index.ts';
+import CoinItem from './components/CoinItem';
+import EmptyList from './components/EmptyList';
 
 const CoinsList = ({ coins }) => {
   return (
     <FlatList
-      style={{
-        padding: 15,
-        gap: 12,
-      }}
       data={coins}
-      ItemSeparatorComponent={() => <View style={{height: 20}} />}
+      numColumns={2}
+      columnWrapperStyle={{
+        flexWrap: 'wrap',
+        justifyContent: coins?.length > 3 ? 'space-around' : 'flex-start',
+        gap: 6
+
+      }}
+      ListEmptyComponent={() => <EmptyList />}
+      ItemSeparatorComponent={() => <View style={{height: 16}} />}
       renderItem={({ item }) => <CoinItem coin={item} />}
-      // onEndReached={() => fetchCoins(coins.length / 50 + 1)}
     />
   );
 };

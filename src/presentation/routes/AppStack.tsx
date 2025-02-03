@@ -8,7 +8,11 @@ const Stack = createNativeStackNavigator<AppStackParams>();
 
 const AppStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name={AppRouteEnum?.COINS} component={CoinsScreen} />
       <Stack.Screen name={AppRouteEnum?.COIN} component={CoinScreen} />
     </Stack.Navigator>

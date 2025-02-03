@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import LogoutButton from '../LogoutButton';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -10,19 +10,17 @@ const Header = (props: Props) => {
   return (
     <View style={styles.header}>
       {/* Avatar */}
-      <TouchableHighlight>
-        <View style={styles?.avatarContainer}>
-          <Image
-            style={styles?.avatarImg}
-            source={{
-              uri: 'https://picsum.photos/200/200',
-            }}
-          />
-          <Text style={styles?.avatarUser}>
-            mamv2137
-          </Text>
-        </View>
-      </TouchableHighlight>
+      <View style={styles?.avatarContainer}>
+        <Image
+          style={styles?.avatarImg}
+          source={{
+            uri: user?.photo || 'https://picsum.photos/200/200',
+          }}
+        />
+        <Text style={styles?.avatarUser}>
+          Hola, {user?.givenName} 👋
+        </Text>
+      </View>
       <LogoutButton />
     </View>
   );
@@ -33,16 +31,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 14
   },
   avatarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    borderWidth: 2,
-    borderColor: 'gray',
-    borderRadius: 20,
-    width: '35%',
   },
   avatarImg: {
     height: 40,
@@ -51,7 +44,7 @@ const styles = StyleSheet.create({
   },
   avatarUser: {
     fontWeight: 500,
-    width: 'auto'
+    width: 'auto',
   },
 });
 
