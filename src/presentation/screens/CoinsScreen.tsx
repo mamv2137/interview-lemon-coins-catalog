@@ -1,24 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Switch, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import CoinsList from '../components/CoinsList';
 import useGetCoinsList from '../hooks/useGetCoinsList';
-import { useNavigation } from '@react-navigation/native';
-import Header from '../components/Header';
+import Header from '../components/Headers';
+import AppLayout from '../layout/App';
+import Card from '../components/ui/Card';
+import Icon from '@react-native-vector-icons/fontawesome';
 
 const CoinsScreen = () => {
   const [showFavorite, setShowFavorite] = useState(false);
-  const navigator = useNavigation();
   const { coins, favorites } = useGetCoinsList();
 
 
   // Filters
-  const [searchValue, setSearchValue] = useState("");
-
-  useEffect(() => {
-    navigator?.setOptions({
-      headerShown: false,
-    });
-  });
+  const [searchValue, setSearchValue] = useState('');
 
   const coinsList = showFavorite ? favorites : coins;
 
@@ -33,22 +28,40 @@ const CoinsScreen = () => {
   const filteredCoins = getFilteredCoin(searchValue);
 
   return (
-    <SafeAreaView>
+    <AppLayout>
       <Header />
-      <View>
-        <TextInput
-          placeholder='Buscar por simbolo o nombre'
-          autoCorrect={false}
-          onChangeText={setSearchValue}
-        />
-        <Switch
-          onValueChange={setShowFavorite}
-          value={showFavorite}
-        />
+      <View style={styles.listContainer}>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          gap: 6
+        }}>
+          <Text>Ver Favoritos</Text>
+          <Switch
+            onValueChange={setShowFavorite}
+            value={showFavorite}
+            aria-label="ver favoritos"
+          />
+        </View>
+        <Card>
+          <TextInput
+            placeholder="Buscar por simbolo o nombre"
+            autoCorrect={false}
+            onChangeText={setSearchValue}
+          />
+        </Card>
       </View>
       <CoinsList coins={filteredCoins} />
-    </SafeAreaView>
+    </AppLayout>
   );
 };
+
+const styles = StyleSheet.create({
+  listContainer: {
+    marginVertical: 16,
+    gap: 8
+  },
+});
 
 export default CoinsScreen;

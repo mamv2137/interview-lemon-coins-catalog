@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+
   const signIn = async () => {
     setIsLoading(true)
     try {
