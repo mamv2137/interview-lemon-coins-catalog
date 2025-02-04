@@ -30,7 +30,7 @@ const useFavoritesStore = create<FavoritesStore>()(persist(
       },
     })),
     getIsFavoriteById: (userId, coinId) => get().favorites[userId]?.some(favId => favId === coinId) || false,
-    getFavoritesByUserId: (userId, coins) => coins?.filter(coin => get().favorites[userId].includes(coin?.id)),
+    getFavoritesByUserId: (userId, coins) => coins?.filter(coin => get().favorites[userId]?.includes(coin?.id)) || [],
   }),
   {
     name: 'favorites-storage',
