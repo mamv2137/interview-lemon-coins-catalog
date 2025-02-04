@@ -3,21 +3,34 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { Coin } from '../types';
 import { storageStore } from './storage';
 
+type CoinIdType = Coin['id'];
 interface FavoritesStore {
-  favorites: Coin[];
-  addFavorite: (coin: Coin) => void;
-  removeFavorite: (coin: Coin) => void;
+  favorites: Record<string, CoinIdType[]>;
+  addFavorite: (userId: string, coinId: CoinIdType) => void;
+  removeFavorite: (userId: string, coinId: CoinIdType) => void;
+  getIsFavoriteById: (userId: string, coinId: CoinIdType) => boolean;
+  getFavoritesByUserId: (userId: string, coins: Coin[]) => Coin[];
 }
 
 const useFavoritesStore = create<FavoritesStore>()(persist(
-  (set) => ({
-    favorites: [],
-    addFavorite: (coinToAdd) => set(state => ({
-      favorites: [...state?.favorites, coinToAdd],
+  (set, get) => ({
+    favorites: {},
+    addFavorite: (userId, coinId) => {
+      set(state => ({
+        favorites: {
+          ...state.favorites || {},
+          [userId]: [...state?.favorites[userId] || [], coinId],
+        },
+      }));
+    },
+    removeFavorite: (userId, coinId) => set(state => ({
+      favorites: {
+        ...state.favorites,
+        [userId]: state?.favorites[userId]?.filter(id => id !== coinId),
+      },
     })),
-    removeFavorite: (coinToRemove) => set(state => ({
-      favorites: state?.favorites?.filter(coin => coin?.id !== coinToRemove?.id),
-    })),
+    getIsFavoriteById: (userId, coinId) => get().favorites[userId]?.some(favId => favId === coinId) || false,
+    getFavoritesByUserId: (userId, coins) => coins?.filter(coin => get().favorites[userId].includes(coin?.id)),
   }),
   {
     name: 'favorites-storage',

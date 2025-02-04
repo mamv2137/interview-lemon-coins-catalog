@@ -1,13 +1,16 @@
 import React from 'react';
-import { Dimensions, Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
 import { AppRouteEnum, AppStackParams } from '../../../../routes/types';
 import { Coin } from '../../../../types';
 import Card from '../../../ui/Card';
 import LikeIcon from '../../../ui/LikeIcon';
-import useCoinsStore from '../../../../store/coins';
 import { formatToLocalPrice } from '../../../../utils/formaters';
-import { styles } from './styles';
+import { getCardWidth, getImageUrl } from './utils';
+import styles from './styles';
+import useFavoritesStore from '../../../../store/favorites';
+import { useAuth } from '../../../../contexts/AuthContext';
+import useGetIsFavorite from '../../../../hooks/useGetIsFavorite';
 
 interface ICoinItem {
   coin: Coin
@@ -15,13 +18,10 @@ interface ICoinItem {
 
 const CoinItem = ({ coin }: ICoinItem) => {
   const navigation = useNavigation<NavigationProp<AppStackParams>>();
-  const { favorites } = useCoinsStore();
 
   const handleNavigate = () => navigation?.navigate(AppRouteEnum?.COIN, { ...coin });
 
-  const screenViewWidth = Dimensions.get('window').width - 10;
-
-  const isFavorite = favorites.some((fav: Coin) => fav?.id === coin?.id);
+  const isFavorite = useGetIsFavorite(coin?.id);
 
   const quote = coin?.quote.USD;
 
@@ -30,12 +30,12 @@ const CoinItem = ({ coin }: ICoinItem) => {
       onPress={handleNavigate}
     >
       <Card style={{
-        width: screenViewWidth / 2 - 15,
+        width: getCardWidth(),
       }}>
         <View style={styles.container}>
           <View style={styles?.header}>
             <Image source={{
-                uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${coin?.id}.png`,
+                uri: getImageUrl(coin?.id),
               }}
               style={styles?.image}
             />

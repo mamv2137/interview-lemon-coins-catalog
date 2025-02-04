@@ -5,31 +5,32 @@ import {
   isSuccessResponse,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import { IAuthContext, User } from './types';
+import { getMessageErrorByType } from './utils';
 import '../../config/google';
 
-const AuthContext = React.createContext({});
-
-type User = {
-  givenName: string
-  id: string
-  email: string
-  name: string
-  familyName: string
-  photo: string
-}
+const AuthContext = React.createContext<IAuthContext>({
+  user: null,
+  isAuthenticated: false,
+  isLoading: false,
+  error: '',
+  signIn: async () => {},
+  signOut: async () => {},
+});
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorType, setErrorType] = useState('');
 
 
   const signIn = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       if (isSuccessResponse(response)) {
-        setUser(response?.data?.user);
+        setUser(response?.data?.user as unknown as User);
       } else {
         // sign in was cancelled by user
       }
@@ -38,13 +39,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         switch (error.code) {
           case statusCodes.IN_PROGRESS:
             // operation (eg. sign in) already in progress
-            console.log('in progress')
+            console.log('in progress');
             break;
             case statusCodes.SIGN_IN_CANCELLED:
-              console.log('cancelled')
+              setErrorType(statusCodes.SIGN_IN_CANCELLED);
             break;
           default:
-          // some other error happened
+          setErrorType('default');
         }
       }
     } finally {
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const logout = async () => {
+  const signOut = async () => {
     try {
       await GoogleSignin.signOut();
       setUser(null);
@@ -63,8 +64,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const getCurrentUser = async () => {
     try {
-      const currentUser = await GoogleSignin.getCurrentUser();
-      setUser(currentUser?.user);
+      const currentUserData = await GoogleSignin.getCurrentUser();
+      setUser(currentUserData?.user as unknown as User);
     } catch (err) {
       console.error(err);
     } finally {
@@ -78,11 +79,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const memoizedValue = useMemo(() => ({
     signIn,
-    logout,
+    signOut,
     user,
     isAuthenticated: !!user,
     isLoading,
-  }), [user]);
+    error: getMessageErrorByType(errorType),
+  }), [user, isLoading, errorType]);
 
   return (
     <AuthContext.Provider value={memoizedValue}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, ImageProps } from 'react-native';
+import { getImageUrl } from '../CoinsList/components/CoinItem/utils';
 
 interface CoinImageProps extends ImageProps {
   coinId: number
@@ -8,7 +9,7 @@ interface CoinImageProps extends ImageProps {
 const CoinImage = ({ coinId, ...props }: CoinImageProps) => {
   return (
     <Image source={{
-        uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${coinId}.png`,
+        uri: getImageUrl(coinId),
       }}
       {...props}
     />

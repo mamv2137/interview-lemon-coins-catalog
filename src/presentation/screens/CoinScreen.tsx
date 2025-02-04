@@ -1,33 +1,41 @@
 import React from 'react';
-import { Linking, Pressable, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AppStackParams } from '../routes/types';
-import useCoinsStore from '../store/coins';
 import { Coin } from '../types';
 import HeaderCoin from '../components/Headers/HeaderCoin';
 import useGetCoinById from '../hooks/useGetCoinById';
 import CoinImage from '../components/CoinImage';
-import { formatToLocalPrice, formatTwoDecimals, getVariationColor } from '../utils/formaters';
+import { formatToLocalPrice, formatTwoDecimals } from '../utils/formaters';
 import Card from '../components/ui/Card';
 import InfoItem from '../components/InfoItem';
 import AppLayout from '../layout/App';
 import ReadMoreButton from '../components/ReadMoreButton';
+import { getVariationColor } from '../utils/colors';
+import useFavoritesStore from '../store/favorites';
+import useGetIsFavorite from '../hooks/useGetIsFavorite';
+import { useAuth } from '../contexts/AuthContext';
 
 const CoinScreen = () => {
   const { params: coin } = useRoute<RouteProp<AppStackParams>>();
-  const { favorites, addFavorite, removeFavorite } = useCoinsStore();
+  const { user } = useAuth();
+  const { addFavorite, removeFavorite } = useFavoritesStore();
   const navigation = useNavigation();
 
-  const { data, isRefetching, refetch } = useGetCoinById(coin?.id);
+  const coinId = coin?.id;
 
-  const isFavorite = favorites.some((fav: Coin) => fav?.id === coin?.id);
+  const { data, isRefetching, refetch } = useGetCoinById(coinId);
+
+  const isFavorite = useGetIsFavorite(coinId);
 
   const handleFavoriteCoin = () => {
-    if(isFavorite) {return removeFavorite(coin);}
-    addFavorite(coin);
+    if(isFavorite) {
+      return removeFavorite(user?.id, coinId);
+    }
+    addFavorite(user?.id, coinId);
   };
 
-  const info = data?.data?.data[coin?.id] || coin;
+  const info = data?.data?.data[coinId] || coin;
 
   const quote = info?.quote.USD;
 

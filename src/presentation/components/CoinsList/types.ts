@@ -1,5 +1,6 @@
 import { Coin } from '../../types';
 
 export interface CoinsListProps {
-  coins: Coin[]
+  coins: Coin[],
+  isLoading?: boolean
 }

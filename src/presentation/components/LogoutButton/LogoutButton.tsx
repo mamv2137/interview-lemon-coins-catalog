@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableHighlight, Text } from 'react-native';
+import { TouchableHighlight } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import Icon from '@react-native-vector-icons/fontawesome';
 import styles from './styles';

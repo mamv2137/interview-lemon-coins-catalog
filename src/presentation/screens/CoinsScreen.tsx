@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import CoinsList from '../components/CoinsList';
 import useGetCoinsList from '../hooks/useGetCoinsList';
 import Header from '../components/Headers';
 import AppLayout from '../layout/App';
 import Card from '../components/ui/Card';
-import Icon from '@react-native-vector-icons/fontawesome';
+import useFavoritesStore from '../store/favorites';
+import useCoinsStore from '../store/coins';
+import { useAuth } from '../contexts/AuthContext';
 
 const CoinsScreen = () => {
   const [showFavorite, setShowFavorite] = useState(false);
-  const { coins, favorites } = useGetCoinsList();
+  const { getFavoritesByUserId } = useFavoritesStore();
+  const { user } = useAuth();
+  const { coins, setCoins } = useCoinsStore();
+  const { isLoading, error, data = [] } = useGetCoinsList();
 
+  useEffect(() => {
+    setCoins(data);
+  }, [isLoading, data]);
+
+  const favorites = getFavoritesByUserId(user?.id!, coins);
 
   // Filters
   const [searchValue, setSearchValue] = useState('');
@@ -30,29 +40,34 @@ const CoinsScreen = () => {
   return (
     <AppLayout>
       <Header />
-      <View style={styles.listContainer}>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          gap: 6
-        }}>
-          <Text>Ver Favoritos</Text>
-          <Switch
-            onValueChange={setShowFavorite}
-            value={showFavorite}
-            aria-label="ver favoritos"
-          />
-        </View>
-        <Card>
-          <TextInput
-            placeholder="Buscar por simbolo o nombre"
-            autoCorrect={false}
-            onChangeText={setSearchValue}
-          />
-        </Card>
-      </View>
-      <CoinsList coins={filteredCoins} />
+      {
+        error ? (
+          <View>
+            <Text>Hay un error</Text>
+          </View>
+        ) : (
+          <View>
+            <View style={styles.listContainer}>
+              <View style={styles.favoriteBox}>
+                <Text>Ver Favoritos</Text>
+                <Switch
+                  onValueChange={setShowFavorite}
+                  value={showFavorite}
+                  aria-label="ver favoritos"
+                />
+              </View>
+              <Card>
+                <TextInput
+                  placeholder="Buscar por simbolo o nombre"
+                  autoCorrect={false}
+                  onChangeText={setSearchValue}
+                />
+              </Card>
+            </View>
+            <CoinsList coins={filteredCoins} isLoading={isLoading}  />
+          </View>
+        )
+      }
     </AppLayout>
   );
 };
@@ -60,7 +75,13 @@ const CoinsScreen = () => {
 const styles = StyleSheet.create({
   listContainer: {
     marginVertical: 16,
-    gap: 8
+    gap: 8,
+  },
+  favoriteBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 6,
   },
 });
 
