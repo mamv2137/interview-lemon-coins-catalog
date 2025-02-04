@@ -22,7 +22,8 @@ const CoinScreen = () => {
   const { addFavorite, removeFavorite } = useFavoritesStore();
   const navigation = useNavigation();
 
-  const coinId = coin?.id;
+  const coinId = coin?.id!;
+  const userId = user?.id!;
 
   const { data, isRefetching, refetch } = useGetCoinById(coinId);
 
@@ -30,9 +31,9 @@ const CoinScreen = () => {
 
   const handleFavoriteCoin = () => {
     if(isFavorite) {
-      return removeFavorite(user?.id, coinId);
+      return removeFavorite(userId, coinId);
     }
-    addFavorite(user?.id, coinId);
+    addFavorite(userId, coinId);
   };
 
   const info = data?.data?.data[coinId] || coin;
@@ -78,7 +79,7 @@ const CoinScreen = () => {
             />
          </Card>
         </View>
-        <ReadMoreButton slug={coin?.slug} name={coin?.name} />
+        <ReadMoreButton slug={coin?.slug!} name={coin?.name!} />
       </ScrollView>
     </AppLayout>
   );

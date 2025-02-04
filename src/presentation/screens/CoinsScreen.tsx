@@ -18,7 +18,7 @@ const CoinsScreen = () => {
 
   useEffect(() => {
     setCoins(data);
-  }, [isLoading, data]);
+  }, [isLoading]);
 
   const favorites = getFavoritesByUserId(user?.id!, coins);
 
@@ -43,7 +43,7 @@ const CoinsScreen = () => {
       {
         error ? (
           <View>
-            <Text>Hay un error</Text>
+            <Text>Hubo un error</Text>
           </View>
         ) : (
           <View>

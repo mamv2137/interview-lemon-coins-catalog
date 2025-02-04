@@ -1,11 +1,10 @@
 import React from 'react';
 import {  Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
-// import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from '@react-native-vector-icons/fontawesome';
 
 const LoginScreen = () => {
-  const { signIn } = useAuth();
+  const { signIn, error } = useAuth();
   return (
     <SafeAreaView
       style={style.container}
@@ -23,6 +22,7 @@ const LoginScreen = () => {
           <Text style={style.button_text}>Sign in with Google</Text>
         </View>
       </Pressable>
+      {error && <Text>{error}</Text>}
     </SafeAreaView>
   );
 };
