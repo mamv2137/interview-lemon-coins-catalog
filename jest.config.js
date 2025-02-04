@@ -1,9 +1,7 @@
 module.exports = {
   preset: 'react-native',
   'setupFiles': [
-    '<rootDir>/src/jest/setup.ts',
-    './node_modules/@react-native-google-signin/google-signin/jest/build/jest/setup.js',
-    '<rootDir>/__mocks__/@react-native-async-storage/asyncStorage.js',
+    '<rootDir>/src/jest/setup.ts'
   ],
   'moduleNameMapper': {
     '\\.(jpg|ico|jpeg|png)$': '<rootDir>/__mocks__/imageMock.js',

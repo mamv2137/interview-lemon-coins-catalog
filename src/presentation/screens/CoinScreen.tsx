@@ -2,7 +2,6 @@ import React from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AppStackParams } from '../routes/types';
-import { Coin } from '../types';
 import HeaderCoin from '../components/Headers/HeaderCoin';
 import useGetCoinById from '../hooks/useGetCoinById';
 import CoinImage from '../components/CoinImage';
@@ -50,6 +49,7 @@ const CoinScreen = () => {
         refreshControl={
           <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
         }
+        testID='scroll-view'
       >
         <Card>
           <View style={styles?.hero}>
