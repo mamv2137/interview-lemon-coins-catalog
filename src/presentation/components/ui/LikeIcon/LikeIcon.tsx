@@ -1,5 +1,5 @@
-import Icon from '@react-native-vector-icons/fontawesome';
 import React from 'react';
+import Icon from '@react-native-vector-icons/fontawesome';
 
 type LikeIconProps = {
   isFavorite: boolean

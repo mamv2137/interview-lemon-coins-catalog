@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Text, View } from 'react-native';
-import SearchInput from '../../../SearchInput';
+import SearchInput from '../../../ui/SearchInput';
 import styles from './styles';
 
 type HeaderListProps = {

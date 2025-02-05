@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, TextInputProps } from 'react-native';
-import Card from '../ui/Card';
+import Card from '../Card';
 
 const SearchInput = (props: TextInputProps) => {
   return (

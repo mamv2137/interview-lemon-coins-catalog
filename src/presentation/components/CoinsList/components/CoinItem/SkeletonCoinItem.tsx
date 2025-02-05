@@ -1,6 +1,6 @@
-import React from 'react'
-import { View } from 'react-native'
-import Card from '../../../ui/Card'
+import React from 'react';
+import { View } from 'react-native';
+import Card from '../../../ui/Card';
 import { getCardWidth } from './utils';
 import styles from './styles';
 
@@ -8,7 +8,7 @@ const SkeletonCoinItem = () => {
   return (
     <Card style={{
       width: getCardWidth(),
-      backgroundColor: '#E5E5E5'
+      backgroundColor: '#E5E5E5',
     }}>
       <View style={styles.container}>
         <View style={styles.header}>
@@ -19,7 +19,7 @@ const SkeletonCoinItem = () => {
         <View style={styles.boxLoad} />
       </View>
     </Card>
-  )
-}
+  );
+};
 
-export default SkeletonCoinItem
+export default SkeletonCoinItem;

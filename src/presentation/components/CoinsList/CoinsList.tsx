@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import CoinItem from './components/CoinItem';
 import EmptyList from './components/EmptyList';
-import { CoinsListProps } from './types';
 import SkeletonCoinItem from './components/CoinItem/SkeletonCoinItem';
 import HeaderList from './components/HeaderList';
 import useFavoritesStore from '../../store/favorites';
 import { useAuth } from '../../contexts/AuthContext';
+import { CoinsListProps } from './types';
 import styles from './styles';
 
 const CoinsList = ({ coins, isLoading = false, onRefresh }: CoinsListProps) => {

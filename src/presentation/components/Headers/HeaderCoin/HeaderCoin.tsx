@@ -1,8 +1,8 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome';
-import styles from './styles';
 import LikeIcon from '../../ui/LikeIcon';
+import styles from './styles';
 
 interface HeaderCoinProps {
   symbol: string;

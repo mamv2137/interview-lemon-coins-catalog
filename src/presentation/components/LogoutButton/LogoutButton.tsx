@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableHighlight } from 'react-native';
-import { useAuth } from '../../contexts/AuthContext';
 import Icon from '@react-native-vector-icons/fontawesome';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from './styles';
 
 const LogoutButton = () => {
