@@ -1,15 +1,15 @@
 import React from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
 import { AppRouteEnum, AppStackParams } from '../../../../routes/types';
-import { Coin } from '../../../../types';
 import Card from '../../../ui/Card';
 import LikeIcon from '../../../ui/LikeIcon';
 import { formatToLocalPrice } from '../../../../utils/formaters';
 import useGetIsFavorite from '../../../../hooks/useGetIsFavorite';
-import { getCardWidth, getImageUrl } from './utils';
-import styles from './styles';
 import CoinImage from '../../../CoinImage';
+import { Coin } from '../../../../types';
+import { getCardWidth } from './utils';
+import styles from './styles';
 
 interface ICoinItem {
   coin: Coin

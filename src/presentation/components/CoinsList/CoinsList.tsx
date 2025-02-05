@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import CoinItem from './components/CoinItem';
 import EmptyList from './components/EmptyList';
 import { CoinsListProps } from './types';
 import SkeletonCoinItem from './components/CoinItem/SkeletonCoinItem';
-import styles from './styles';
 import HeaderList from './components/HeaderList';
 import useFavoritesStore from '../../store/favorites';
 import { useAuth } from '../../contexts/AuthContext';
+import styles from './styles';
 
-const CoinsList = ({ coins, isLoading = false }: CoinsListProps) => {
+const CoinsList = ({ coins, isLoading = false, onRefresh }: CoinsListProps) => {
   const [showFavorite, setShowFavorite] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const { getFavoritesByUserId } = useFavoritesStore();
@@ -33,23 +33,24 @@ const CoinsList = ({ coins, isLoading = false }: CoinsListProps) => {
   const data = isLoading ? mockSlots : coins;
 
   return (
-    <View>
-      <HeaderList
+    <FlatList
+      refreshControl={
+        <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
+      }
+      testID="coins-list"
+      data={filteredCoins}
+      numColumns={2}
+      ListHeaderComponent={<HeaderList
         showFavorite={showFavorite}
         setShowFavorite={setShowFavorite}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
-      />
-      <FlatList
-        testID="coins-list"
-        data={filteredCoins}
-        numColumns={2}
-        columnWrapperStyle={[styles.list, data?.length >= 3 ? styles.start : styles.space]}
-        ListEmptyComponent={<EmptyList />}
-        ItemSeparatorComponent={() => <View style={{height: 16}} />}
-        renderItem={({ item }) => isLoading ? <SkeletonCoinItem /> : <CoinItem coin={item} />}
-      />
-    </View>
+      />}
+      columnWrapperStyle={[styles.list, data?.length >= 3 ? styles.start : styles.space]}
+      ListEmptyComponent={<EmptyList />}
+      ItemSeparatorComponent={() => <View style={{height: 16}} />}
+      renderItem={({ item }) => isLoading ? <SkeletonCoinItem /> : <CoinItem coin={item} />}
+    />
   );
 };
 

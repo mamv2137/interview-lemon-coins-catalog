@@ -8,18 +8,20 @@ import useCoinsStore from '../store/coins';
 
 const CoinsScreen = () => {
   const { setCoins, coins } = useCoinsStore();
-  const { isLoading, error, data = [] } = useGetCoinsList();
+  const { isLoading, error, data = [], refetch, isRefetching } = useGetCoinsList();
 
   useEffect(() => {
     setCoins(data);
-  }, [isLoading]);
+  }, [isLoading, isRefetching]);
+
+  const hasError = Boolean(error);
 
   return (
     <AppLayout>
       <Header />
       {
         <View>
-          {!!error ? <Text>Hubo un error</Text> : <CoinsList coins={coins} isLoading={isLoading} />}
+          {hasError ? <Text>Hubo un error</Text> : <CoinsList coins={coins} isLoading={isLoading || isRefetching} onRefresh={refetch} />}
         </View>
       }
     </AppLayout>
