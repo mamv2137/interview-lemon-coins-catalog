@@ -4,7 +4,11 @@ import { setupMockServer } from '../../src/jest/helpers/mock-server';
 
 const handlers = [getCoinListHandler(), getCoinByIdHandler()];
 
-setupMockServer(handlers);
+const server = setupMockServer(handlers);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe('CMC Service', () => {
   it('fetches the coins list successfully', async () => {

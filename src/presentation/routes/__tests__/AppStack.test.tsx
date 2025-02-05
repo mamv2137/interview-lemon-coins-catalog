@@ -4,9 +4,9 @@ import { render } from '../../../jest/helpers/test-utils';
 import AppStack from '../AppStack';
 import { useAuth } from '../../contexts/AuthContext';
 import useGetCoinsList from '../../hooks/useGetCoinsList';
-import { mockBitcoinData } from '../../../jest/helpers/mock-data';
+import { mockCoins } from '../../../jest/helpers/mock-data';
 import { useNavigation } from '@react-navigation/native';
-// import { mockNavigation } from '../../../jest/helpers/mock-functions';
+import { mockNavigation } from '../../../jest/helpers/mock-functions';
 
 jest.mock('../../contexts/AuthContext');
 jest.mock('@react-native-async-storage/async-storage', () =>
@@ -23,8 +23,6 @@ jest.mock('@react-navigation/native', () => {
 });
 jest.mock('../../hooks/useGetCoinsList');
 
-const mockCoins = [mockBitcoinData];
-
 describe('AppStack', () => {
   beforeEach(() => {
     (useAuth as jest.Mock).mockReturnValue({ isAuthenticated: true });
@@ -40,14 +38,13 @@ describe('AppStack', () => {
   });
 
   it('navigates to CoinScreen when a coin is clicked', async () => {
+    (useNavigation as jest.Mock).mockReturnValue(mockNavigation);
     const { navigate } = useNavigation();
     render(
       <AppStack />
     );
 
-    const cardElement = screen.getByTestId('coin-item');
-    fireEvent.press(cardElement);
-
-    expect(navigate).toHaveBeenCalled()
+    fireEvent.press(screen.getByText('Bitcoin (BTC)'));
+    expect(navigate).toHaveBeenCalledWith('CoinScreen', { ...mockCoins[0] });
   });
 });
