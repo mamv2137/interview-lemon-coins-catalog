@@ -8,7 +8,7 @@ type LikeIconProps = {
 
 const LikeIcon = ({ isFavorite, size = 25 }: LikeIconProps) => {
   return (
-    <Icon name={isFavorite ? 'heart' : 'heart-o'} size={size} />
+    <Icon testID="heart-icon" name={isFavorite ? 'heart' : 'heart-o'} size={size} />
   );
 };
 

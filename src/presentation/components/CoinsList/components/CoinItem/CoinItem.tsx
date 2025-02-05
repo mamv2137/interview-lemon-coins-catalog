@@ -9,6 +9,7 @@ import { formatToLocalPrice } from '../../../../utils/formaters';
 import useGetIsFavorite from '../../../../hooks/useGetIsFavorite';
 import { getCardWidth, getImageUrl } from './utils';
 import styles from './styles';
+import CoinImage from '../../../CoinImage';
 
 interface ICoinItem {
   coin: Coin
@@ -21,7 +22,7 @@ const CoinItem = ({ coin }: ICoinItem) => {
 
   const isFavorite = useGetIsFavorite(coin?.id);
 
-  const quote = coin?.quote.USD;
+  const quote = coin?.quote?.USD;
 
   return (
     <Pressable
@@ -33,9 +34,8 @@ const CoinItem = ({ coin }: ICoinItem) => {
       }}>
         <View style={styles.container}>
           <View style={styles?.header}>
-            <Image source={{
-                uri: getImageUrl(coin?.id),
-              }}
+            <CoinImage 
+              coinId={coin?.id}
               style={styles?.image}
             />
             <LikeIcon size={18} isFavorite={isFavorite} />

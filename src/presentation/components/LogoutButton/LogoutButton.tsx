@@ -5,11 +5,11 @@ import Icon from '@react-native-vector-icons/fontawesome';
 import styles from './styles';
 
 const LogoutButton = () => {
-  const { logout } = useAuth();
+  const { signOut } = useAuth();
 
   return (
-    <TouchableHighlight onPress={logout} style={styles.button}>
-      <Icon name="sign-out" size={20} style={styles.icon} />
+    <TouchableHighlight testID="sign-out-button" onPress={signOut} style={styles.button}>
+      <Icon testID="sign-out-icon" name="sign-out" size={20} style={styles.icon} />
     </TouchableHighlight>
   );
 };

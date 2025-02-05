@@ -11,6 +11,7 @@ const CoinImage = ({ coinId, ...props }: CoinImageProps) => {
     <Image source={{
         uri: getImageUrl(coinId),
       }}
+      testID="coin-image"
       {...props}
     />
   );
