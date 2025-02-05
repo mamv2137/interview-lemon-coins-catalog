@@ -20,8 +20,8 @@ const CoinsList = ({ coins, isLoading = false }: CoinsListProps) => {
 
   const getFilteredCoins = (searchParam: string) => {
     return coinsList?.filter(crypto => {
-      const bySymbol = crypto?.symbol.toLowerCase().includes(searchParam.toLowerCase());
-      const byName = crypto?.name.toLowerCase().includes(searchParam.toLowerCase());
+      const bySymbol = crypto?.symbol?.toLowerCase().includes(searchParam.toLowerCase());
+      const byName = crypto?.name?.toLowerCase().includes(searchParam.toLowerCase());
       return byName || bySymbol;
     });
   };

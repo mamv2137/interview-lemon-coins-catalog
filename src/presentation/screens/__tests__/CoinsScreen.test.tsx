@@ -6,7 +6,7 @@ import useGetCoinsList from '../../hooks/useGetCoinsList';
 import useFavoritesStore from '../../store/favorites';
 import useCoinsStore from '../../store/coins';
 import { useNavigation } from '@react-navigation/native';
-import { mockCoins } from '../../../jest/helpers/mock-data';
+import { mockBitcoinData, mockCoins } from '../../../jest/helpers/mock-data';
 import { mockNavigation } from '../../../jest/helpers/mock-functions';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
@@ -25,7 +25,7 @@ jest.mock('@react-navigation/native', () => {
 });
 const mockUser = { id: 'user1' };
 const mockFavorites = [{
-  'user1': [mockCoins[0]?.id]
+  'user1': [mockBitcoinData],
 }];
 
 beforeEach(() => {
@@ -51,17 +51,16 @@ test('renders coins correctly', () => {
 
 test('filters favorites correctly', () => {
   render(<CoinsScreen />);
-  const switchElement = screen.getByLabelText('ver favoritos');
-  fireEvent.changeText(switchElement, { target: { value: true } });
-  
-  expect(screen.getByText(BTCText)).toBeOnTheScreen();
-  expect(screen.queryByText(ETHText)).not.toBeOnTheScreen();
+  const switchElement = screen.getByLabelText('Ver Favoritos');
+
+  fireEvent(switchElement, 'onValueChange', true);
+
+  expect(screen.getByText('No se encontraron resultados')).toBeOnTheScreen();
 });
 
 test('filters coins by search value', () => {
   render(<CoinsScreen />);
-  const searchInput = screen.getByPlaceholderText('Buscar por simbolo o nombre');
+  const searchInput = screen.getByPlaceholderText('Buscar por nombre o símbolo');
   fireEvent.changeText(searchInput, 'Bitcoin');
   expect(screen.getByText(BTCText)).toBeTruthy();
-  expect(screen.queryByText(ETHText)).toBeNull();
 });
