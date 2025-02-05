@@ -2,6 +2,8 @@ import {
   GoogleSignin,
 } from '@react-native-google-signin/google-signin';
 
+console.log(process.env.ANDROID_CLIENT_ID);
+
 GoogleSignin.configure({
   webClientId: '79823423581-e8iin2pce8s6cgv672kak546ul0a8p9f.apps.googleusercontent.com', // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
   scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile

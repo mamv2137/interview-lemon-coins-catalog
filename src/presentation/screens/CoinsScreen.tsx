@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import CoinsList from '../components/CoinsList';
 import useGetCoinsList from '../hooks/useGetCoinsList';
 import Header from '../components/Headers';
