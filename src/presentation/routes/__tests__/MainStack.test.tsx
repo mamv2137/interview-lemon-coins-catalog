@@ -4,7 +4,7 @@ import { render } from '../../../jest/helpers/test-utils';
 import MainStack from '../MainStack';
 import { useAuth } from '../../contexts/AuthContext';
 
-jest.mock('../../src/presentation/contexts/AuthContext');
+jest.mock('../../contexts/AuthContext');
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );

@@ -7,7 +7,7 @@ import { getCoinById } from '../../../services/CMC';
 import useGetCoinById from '../useGetCoinById';
 import useGetCoinsList from '../useGetCoinsList';
 
-jest.mock('../../src/services/CMC');
+jest.mock('../../../services/CMC');
 
 const queryClient = new QueryClient();
 const wrapper = ({ children }: { children: React.ReactNode }) => (

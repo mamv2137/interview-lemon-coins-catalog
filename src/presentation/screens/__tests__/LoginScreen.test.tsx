@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 import LoginScreen from '../LoginScreen';
 import { useAuth } from '../../contexts/AuthContext';
 
-jest.mock('../../src/presentation/contexts/AuthContext');
+jest.mock('../../contexts/AuthContext');
 
 const mockSignIn = jest.fn();
 const mockError = 'Authentication error';

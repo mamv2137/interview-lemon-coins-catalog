@@ -4,13 +4,13 @@ import LogoutButton from './LogoutButton';
 import { useAuth } from '../../contexts/AuthContext';
 
 jest.mock('../../contexts/AuthContext');
-jest.mock('@react-native-vector-icons/fontawesome', () => 'Icon');
+jest.mock('@react-native-vector-icons/FontAwesome', () => 'Icon');
 
 describe('LogoutButton', () => {
-  const mockLogout = jest.fn();
+  const mockSignOut = jest.fn();
 
   beforeEach(() => {
-    (useAuth as jest.Mock).mockReturnValue({ signOut: mockLogout });
+    (useAuth as jest.Mock).mockReturnValue({ signOut: mockSignOut });
   });
 
   it('renders correctly', () => {
@@ -18,10 +18,10 @@ describe('LogoutButton', () => {
     expect(screen.getByTestId('sign-out-icon')).toBeTruthy();
   });
 
-  it('calls logout function when pressed', () => {
+  it('calls signOut function when pressed', () => {
     render(<LogoutButton />);
-    const button = screen.getByTestId('sign-out-icon');
+    const button = screen.getByTestId('sign-out-button');
     fireEvent.press(button);
-    expect(mockLogout).toHaveBeenCalled();
+    expect(mockSignOut).toHaveBeenCalled();
   });
 });
