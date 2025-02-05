@@ -1,11 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { TextInput, TextInputProps } from 'react-native';
+import Card from '../ui/Card';
 
-interface  = {}
-
-const SearchInput = (props: Props) => {
+const SearchInput = (props: TextInputProps) => {
   return (
-    <div>SearchInput</div>
-  )
-}
+    <Card>
+      <TextInput
+        {...props}
+      />
+    </Card>
+  );
+};
 
-export default SearchInput
+export default SearchInput;
