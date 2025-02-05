@@ -1,5 +1,5 @@
 
-import { getVariationColor } from '../../src/presentation/utils/colors';
+import { getVariationColor } from '../colors';
 
 describe('getVariationColor', () => {
   it('returns "green" for positive percentages', () => {

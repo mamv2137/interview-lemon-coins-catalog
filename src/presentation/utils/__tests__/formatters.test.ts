@@ -1,4 +1,4 @@
-import { formatTwoDecimals, formatToLocalPrice } from '../../src/presentation/utils/formaters';
+import { formatTwoDecimals, formatToLocalPrice } from '../formaters';
 
 describe('formatTwoDecimals', () => {
   it('formats number to two decimal places', () => {

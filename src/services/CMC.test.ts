@@ -1,6 +1,6 @@
 import { getCoinsList, getCoinById } from '../../src/services/CMC';
-import { getCoinByIdErrorHandler, getCoinByIdHandler, getCoinListErrorHandler, getCoinListHandler } from '../helpers/http-handlers';
-import { setupMockServer } from '../helpers/mock-server';
+import { getCoinByIdErrorHandler, getCoinByIdHandler, getCoinListErrorHandler, getCoinListHandler } from '../../src/jest/helpers/http-handlers';
+import { setupMockServer } from '../../src/jest/helpers/mock-server';
 
 const handlers = [getCoinListHandler(), getCoinByIdHandler()];
 
@@ -24,9 +24,7 @@ describe('CMC Service', () => {
   });
 
   it('handles error when fetching coins list', async () => {
-    server.use(
-      getCoinListErrorHandler()
-    );
+    setupMockServer([getCoinListErrorHandler()]);
 
     const response = await getCoinsList();
 
@@ -34,9 +32,7 @@ describe('CMC Service', () => {
   });
 
   it('handles error when fetching a coin by id', async () => {
-    server.use(
-      getCoinByIdErrorHandler()
-    );
+    setupMockServer([getCoinByIdErrorHandler()]);
 
     await expect(getCoinById(1)).rejects.toThrow('Request failed with status code 500');
   });

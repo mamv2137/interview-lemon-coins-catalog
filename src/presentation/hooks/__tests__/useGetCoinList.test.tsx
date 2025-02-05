@@ -3,9 +3,9 @@ import { renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import { getCoinById } from '../../src/services/CMC';
-import useGetCoinById from '../../src/presentation/hooks/useGetCoinById';
-import useGetCoinsList from '../../src/presentation/hooks/useGetCoinsList';
+import { getCoinById } from '../../../services/CMC';
+import useGetCoinById from '../useGetCoinById';
+import useGetCoinsList from '../useGetCoinsList';
 
 jest.mock('../../src/services/CMC');
 

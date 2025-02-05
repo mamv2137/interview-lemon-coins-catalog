@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
-import LoginScreen from '../../src/presentation/screens/LoginScreen';
-import { useAuth } from '../../src/presentation/contexts/AuthContext';
+import LoginScreen from '../LoginScreen';
+import { useAuth } from '../../contexts/AuthContext';
 
 jest.mock('../../src/presentation/contexts/AuthContext');
 
