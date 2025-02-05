@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorType, setErrorType] = useState('');
 
+  const hasError = !!errorType;
 
   const signIn = async () => {
     setIsLoading(true);
@@ -83,8 +84,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     user,
     isAuthenticated: !!user,
     isLoading,
-    error: getMessageErrorByType(errorType),
-  }), [user, isLoading, errorType]);
+    error: hasError ? getMessageErrorByType(errorType) : '',
+  }), [user, isLoading, errorType, hasError]);
 
   return (
     <AuthContext.Provider value={memoizedValue}>
