@@ -19,7 +19,7 @@ const CoinsScreen = () => {
       <Header />
       {
         <View>
-          {error ? <Text>Hubo un error</Text> : <CoinsList coins={coins} isLoading={isLoading} />}
+          {!!error ? <Text>Hubo un error</Text> : <CoinsList coins={coins} isLoading={isLoading} />}
         </View>
       }
     </AppLayout>

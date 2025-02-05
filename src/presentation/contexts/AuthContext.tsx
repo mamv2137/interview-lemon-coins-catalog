@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       if (isSuccessResponse(response)) {
         setUser(response?.data?.user as unknown as User);
       } else {
-        // sign in was cancelled by user
+        setErrorType(statusCodes.SIGN_IN_CANCELLED);
       }
     } catch (error) {
       if (isErrorWithCode(error)) {
