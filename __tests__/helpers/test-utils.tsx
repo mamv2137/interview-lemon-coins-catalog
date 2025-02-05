@@ -22,7 +22,7 @@ const Providers = ({ children }: PropsWithChildren) => {
   );
 };
 
-const customRender = (ui: JSX.Element, options: Record<string, unknown>) => {
+const customRender = (ui: JSX.Element, options: Record<string, unknown> = {}) => {
   return render(ui, {wrapper: Providers, ...options});
 }
 

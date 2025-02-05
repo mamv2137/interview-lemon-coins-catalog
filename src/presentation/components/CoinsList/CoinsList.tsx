@@ -13,6 +13,7 @@ const CoinsList = ({ coins, isLoading = false }: CoinsListProps) => {
 
   return (
     <FlatList
+      testID="coins-list"
       data={data}
       numColumns={2}
       columnWrapperStyle={[styles.list, data?.length >= 3 ? styles.start : styles.space]}

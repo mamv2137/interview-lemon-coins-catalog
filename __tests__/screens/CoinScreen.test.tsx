@@ -7,6 +7,7 @@ import useGetCoinById from '../../src/presentation/hooks/useGetCoinById';
 import useFavoritesStore from '../../src/presentation/store/favorites';
 import useGetIsFavorite from '../../src/presentation/hooks/useGetIsFavorite';
 import { mockNavigation } from '../helpers/mock-functions';
+import { mockBitcoinData } from '../helpers/mock-data';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
@@ -19,26 +20,13 @@ jest.mock('../../src/presentation/hooks/useGetIsFavorite');
 
 
 const mockRoute = {
-  params: { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', slug: 'bitcoin' },
+  params: { id: 1, name: 'Bitcoin', symbol: 'BTC', slug: 'bitcoin' },
 };
 const mockUser = { id: 'user1' };
 const mockData = {
   data: {
     data: {
-      bitcoin: {
-        id: 'bitcoin',
-        name: 'Bitcoin',
-        symbol: 'BTC',
-        quote: {
-          USD: {
-            price: 50000,
-            percent_change_24h: 5,
-            market_cap: 1000000000,
-            volume_24h: 50000000,
-          },
-        },
-        circulating_supply: 18000000,
-      },
+      1: mockBitcoinData,
     },
   },
 };

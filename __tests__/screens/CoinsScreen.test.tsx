@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import { screen, fireEvent } from '@testing-library/react-native';
 import { useNavigation } from '@react-navigation/native';
-// import { render } from '../test-utils';
+import { render } from '../helpers/test-utils';
 import CoinsScreen from '../../src/presentation/screens/CoinsScreen';
 import { useAuth } from '../../src/presentation/contexts/AuthContext';
 import useGetCoinsList from '../../src/presentation/hooks/useGetCoinsList';
@@ -40,13 +40,13 @@ beforeEach(() => {
 
 test('renders coins correctly', () => {
   render(<CoinsScreen />);
-  expect(screen.getByText('Bitcoin')).toBeTruthy();
-  expect(screen.getByText('Ethereum')).toBeTruthy();
+  expect(screen.getByText('Bitcoin')).toBeOnTheScreen();
+  expect(screen.getByText('Ethereum')).toBeOnTheScreen();
 });
 
 test('filters favorites correctly', () => {
   render(<CoinsScreen />);
-  const switchElement = screen.getByTestId('favorite-switch');
+  const switchElement = screen.getByLabelText('ver favoritos');
   fireEvent.changeText(switchElement, { target: { value: true } });
   expect(screen.getByText('Bitcoin')).toBeTruthy();
   expect(screen.queryByText('Ethereum')).toBeNull();
@@ -54,7 +54,7 @@ test('filters favorites correctly', () => {
 
 test('filters coins by search value', () => {
   render(<CoinsScreen />);
-  const searchInput = screen.getByPlaceholderText('Search');
+  const searchInput = screen.getByPlaceholderText('Buscar por simbolo o nombre');
   fireEvent.changeText(searchInput, 'Bitcoin');
   expect(screen.getByText('Bitcoin')).toBeTruthy();
   expect(screen.queryByText('Ethereum')).toBeNull();

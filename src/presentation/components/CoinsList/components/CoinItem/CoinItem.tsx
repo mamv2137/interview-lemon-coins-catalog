@@ -6,11 +6,9 @@ import { Coin } from '../../../../types';
 import Card from '../../../ui/Card';
 import LikeIcon from '../../../ui/LikeIcon';
 import { formatToLocalPrice } from '../../../../utils/formaters';
+import useGetIsFavorite from '../../../../hooks/useGetIsFavorite';
 import { getCardWidth, getImageUrl } from './utils';
 import styles from './styles';
-import useFavoritesStore from '../../../../store/favorites';
-import { useAuth } from '../../../../contexts/AuthContext';
-import useGetIsFavorite from '../../../../hooks/useGetIsFavorite';
 
 interface ICoinItem {
   coin: Coin
@@ -28,6 +26,7 @@ const CoinItem = ({ coin }: ICoinItem) => {
   return (
     <Pressable
       onPress={handleNavigate}
+      testID="coin-item"
     >
       <Card style={{
         width: getCardWidth(),

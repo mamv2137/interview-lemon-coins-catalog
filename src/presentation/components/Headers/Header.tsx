@@ -1,11 +1,9 @@
-import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import LogoutButton from '../LogoutButton';
 import { useAuth } from '../../contexts/AuthContext';
 
-type Props = {}
-
-const Header = (props: Props) => {
+const Header = () => {
   const { user } = useAuth();
   return (
     <View style={styles.header}>
