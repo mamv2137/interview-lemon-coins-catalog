@@ -24,7 +24,9 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 const mockUser = { id: 'user1' };
-const mockFavorites = [mockCoins[0]?.id];
+const mockFavorites = [{
+  'user1': [mockCoins[0]?.id]
+}];
 
 beforeEach(() => {
   (useAuth as jest.Mock).mockReturnValue({ user: mockUser });
@@ -51,8 +53,9 @@ test('filters favorites correctly', () => {
   render(<CoinsScreen />);
   const switchElement = screen.getByLabelText('ver favoritos');
   fireEvent.changeText(switchElement, { target: { value: true } });
+  
   expect(screen.getByText(BTCText)).toBeOnTheScreen();
-  expect(screen.getByText(ETHText)).not.toBeOnTheScreen();
+  expect(screen.queryByText(ETHText)).not.toBeOnTheScreen();
 });
 
 test('filters coins by search value', () => {

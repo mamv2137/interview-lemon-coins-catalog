@@ -11,6 +11,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 const CoinsScreen = () => {
   const [showFavorite, setShowFavorite] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const { getFavoritesByUserId } = useFavoritesStore();
   const { user } = useAuth();
   const { coins, setCoins } = useCoinsStore();
@@ -23,11 +24,10 @@ const CoinsScreen = () => {
   const favorites = getFavoritesByUserId(user?.id!, coins);
 
   // Filters
-  const [searchValue, setSearchValue] = useState('');
 
   const coinsList = showFavorite ? favorites : coins;
 
-  const getFilteredCoin = (searchParam: string) => {
+  const getFilteredCoins = (searchParam: string) => {
     return coinsList?.filter(crypto => {
       const bySymbol = crypto?.symbol.toLowerCase().includes(searchParam.toLowerCase());
       const byName = crypto?.name.toLowerCase().includes(searchParam.toLowerCase());
@@ -35,7 +35,7 @@ const CoinsScreen = () => {
     });
   };
 
-  const filteredCoins = getFilteredCoin(searchValue);
+  const filteredCoins = getFilteredCoins(searchValue);
 
   return (
     <AppLayout>
@@ -51,7 +51,7 @@ const CoinsScreen = () => {
               <View style={styles.favoriteBox}>
                 <Text>Ver Favoritos</Text>
                 <Switch
-                  onValueChange={setShowFavorite}
+                  onValueChange={(value) => setShowFavorite(value)}
                   value={showFavorite}
                   aria-label="ver favoritos"
                 />
